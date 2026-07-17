@@ -53,8 +53,6 @@ The constructors and functions should guarantee that `Opaque::value`, `Mutex::mu
 ## Solution template
 
 ```rust
-// boxed-rfl-mutex.rs
-
 // FIXED DECLARATIONS
 
 mod bindings {
