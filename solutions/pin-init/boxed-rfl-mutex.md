@@ -1,3 +1,5 @@
+# Boxed RFL Mutex
+
 ```rust
 // FIXED DECLARATIONS
 
@@ -27,10 +29,9 @@ impl<T> Opaque<T> {
 }
 
 impl<T> Mutex<T> {
-    pub fn new<E>(value: impl PinInit<T, E>) -> impl PinInit<Self, E>
-    where
-        E: From<Infallible>,
-    {
+    pub fn new<E>(
+        value: impl PinInit<T, E>,
+    ) -> impl PinInit<Self, E> {
         pin_init!(Self {
             mutex <- Opaque::ffi_init(|ptr| unsafe { bindings::__mutex_init(ptr) }),
             value <- UnsafeCell::pin_init(value),
