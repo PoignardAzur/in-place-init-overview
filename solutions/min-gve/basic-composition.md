@@ -1,4 +1,4 @@
-# Minimal example
+# Basic composition
 
 ```rust
 // FIXED DECLARATIONS

@@ -1,4 +1,4 @@
-# Minimal example
+# Observe address
 
 ```rust
 // FIXED DECLARATIONS

@@ -1,4 +1,4 @@
-# Minimal example
+# Basic composition
 
 ## Premise
 
