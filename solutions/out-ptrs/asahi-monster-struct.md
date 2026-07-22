@@ -94,7 +94,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
           raw.aux_leak_coef.cs_1[i] = *coef;
           raw.aux_leak_coef.cs_2[i] = *coef;
         }
-  
+
           for (i, coef) in csafr.leak_coef_cs.iter().enumerate() {
             raw.aux_leak_coef.afr_1[i] = *coef;
             raw.aux_leak_coef.afr_2[i] = *coef;
