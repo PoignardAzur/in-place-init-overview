@@ -33,7 +33,9 @@ pub struct SelfRef {
 
 // PROPOSAL
 
-fn make_self_ref(value: u32, ...) -> ...;
+fn make_self_ref(value: u32, ...) -> ... {
+    // ...
+}
 
 let value = make_self_ref(...);
 assert_eq!(value.addr_of_a, &raw const value.a);
