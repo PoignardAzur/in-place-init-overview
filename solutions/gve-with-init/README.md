@@ -1,8 +1,11 @@
-# Proposal: Guaranteed Value Emplacement
+# Guaranteed Value Emplacement
 
 ## Summary
 
 TODO
+
+This is based on the initial "Guaranteed Value Emplacement" RFC draft, though the examples in this folder use a slightly different syntax that hasn't been documented yet.
+
 
 ## More info
 
