@@ -39,15 +39,17 @@ impl<T> Mutex<T> {
         &uninit self,
         init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own T, E>,
     ) -> Result<&own Self, E> {
-        self.mutex <- Opaque::ffi_init(
+        let mutex = Opaque::ffi_init(
             &uninit self.mutex,
             |ptr| unsafe {
                 bindings::__mutex_init(ptr);
             }
         );
-        self.value <- init_fn(&uninit self.value)?;
-        self <- _;
-        Ok(self)
+        let value = init_fn(&uninit self.value)?;
+        Ok(self <- Self {
+            mutex <- mutex,
+            value <- value,
+        })
     }
 }
 
