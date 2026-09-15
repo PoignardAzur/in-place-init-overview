@@ -3,18 +3,21 @@
 ```rust
 // FIXED DECLARATIONS
 
-pub struct MyLargeStruct { ... };
-
+pub struct MyBasicStruct {
+    a: u32,
+    b: u32,
+    c: u32,
+};
 
 // PROPOSAL
 
-fn create_large_struct() -> MyLargeStruct {
-    MyLargeStruct {
-        // ...
+fn create_struct() -> MyBasicStruct {
+    MyBasicStruct {
+        a: 0,
+        b: 0,
+        c: 0,
     }
 }
 
-// Box::new_with would be a new constructor taking a function, allocating enough space
-// for its return value, and emplacing the function's return value into the allocated space.
-let my_box = Box::new_with(|| create_large_struct());
+let my_value = create_struct();
 ```

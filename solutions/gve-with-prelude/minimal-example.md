@@ -3,16 +3,21 @@
 ```rust
 // FIXED DECLARATIONS
 
-pub struct MyLargeStruct { ... };
-
+pub struct MyBasicStruct {
+    a: u32,
+    b: u32,
+    c: u32,
+};
 
 // PROPOSAL
 
-fn create_large_struct() -> MyLargeStruct {
-    MyLargeStruct {
-        // ...
+fn create_struct() -> MyBasicStruct {
+    MyBasicStruct {
+        a: 0,
+        b: 0,
+        c: 0,
     }
 }
 
-let my_box: Box<MyLargeStruct> = Box::new(create_large_struct());
+let my_value = create_struct();
 ```
