@@ -9,6 +9,7 @@ You should consult problems in this order:
 
 - **minimal-example**
 - **basic-composition**
+- **box-constructor**
 - **observe-address**
 - **boxed-rfl-mutex**
 - **asahi-monster-struct**

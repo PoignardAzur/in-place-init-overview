@@ -19,7 +19,7 @@ pub enum Group4 {
 
 // PROPOSAL
 
-fn new(&uninit PinnedThing, value: u32) -> &own PinnedThing;
+fn new(ptr: &uninit PinnedThing, value: u32) -> &own PinnedThing;
 
 let group1: Group1;
 group1.0 <- new(&uninit group1.0, 1);

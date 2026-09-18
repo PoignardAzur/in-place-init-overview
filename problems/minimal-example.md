@@ -7,15 +7,19 @@ This example should demonstrate the minimum viable syntax for returning a large 
 
 ## Problem statement
 
-Given an arbitrary type `MyLargeStruct`:
+Given a type `MyBasicStruct`:
 
 ```rust
-pub struct MyLargeStruct { ... };
+pub struct MyBasicStruct {
+    a: u32,
+    b: u32,
+    c: u32,
+};
 ```
 
-**Write a function returning `MyLargeStruct`, and then call this function in a way that emplaces its result in a box.**
+**Write a function returning `MyBasicStruct` (setting fields to zero), and then call this function in a way that emplaces its result in a local.**
 
-By "emplace", we mean that no instance of `MyLargeStruct` is ever moved.
+By "emplace", we mean that no instance of `MyBasicStruct` is ever moved.
 What this means specifically will be explored in other examples.
 
 
@@ -24,17 +28,20 @@ What this means specifically will be explored in other examples.
 ```rust
 // FIXED DECLARATIONS
 
-pub struct MyLargeStruct { ... };
-
+pub struct MyBasicStruct {
+    a: u32,
+    b: u32,
+    c: u32,
+};
 
 // PROPOSAL
 
-fn create_large_struct(...) -> ... {
+fn create_struct(...) -> ... {
     // ...
 }
 
-let my_box: Box<MyLargeStruct>;
+let my_value: MyBasicStruct;
 // ...
-// initialize my_box somehow, without ever moving MyLargeStruct.
+// initialize my_value somehow, without ever moving MyBasicStruct.
 // ...
 ```
