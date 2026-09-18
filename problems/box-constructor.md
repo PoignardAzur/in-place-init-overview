@@ -21,7 +21,9 @@ fn make_thing(...) -> ...;
 
 **Write a constructor for `Box` that allocates space and then emplaces an object in it, and call this constructor with `make_thing()`.**
 
-By "emplace", we mean that no instance of `PinnedThing` should move. The box may or may not be a `Box<Pin<T>>`.
+By "emplace", we mean that no instance of `PinnedThing` should move.
+
+(Real implementations would likely include another constructor returning `Box<Pin<T>>`. We skip this for simplicity.)
 
 
 ## Solution template
