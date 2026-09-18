@@ -1,7 +1,36 @@
 # Asahi Monster Struct
 
 ```rust
-// PROPOSAL
+// PROTOTYPES
+
+fn new_init<'a, E: Error, T: GpuStruct>(
+  &mut self,
+  inner_init: impl FnOnce<&uninit T> -> Result<&own T, E>,
+  raw_init: impl FnOnce(ptr: &uninit T::Raw<'a>, &'a T, GpuWeakPointer<T>) -> Result<&own T::Raw<'a>, E>,
+) -> Result<GpuObject<T>>;
+
+fn t81xx_data(
+  ptr: &uninit raw::T81xxData,
+  cfg: &hw::HwConfig,
+  dyncfg: &hw::DynConfig,
+) -> &own raw::T81xxData;
+fn hw_shared1(
+  ptr: &uninit raw::HwDataShared1,
+  cfg: &hw::HwConfig
+) -> &own raw::HwDataShared1;
+fn hw_shared2(
+  ptr: &uninit raw::HwDataShared2,
+  cfg: &hw::HwConfig,
+  dyncfg: &hw::DynConfig,
+) -> Result<&own raw::HwDataShared2, Error>;
+fn hw_shared3(
+  ptr: &uninit raw::HwDataShared3,
+  cfg: &hw::HwConfig
+) -> &own raw::HwDataShared3;
+
+
+// IMPLEMENTATION
+fn init_zeroed<T: Zeroable>(ptr: &uninit T) -> &own T;
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   let pwr = &self.dyncfg.pwr;
@@ -12,7 +41,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   self.alloc
     .private
     // MODIFIED
-    .new_init(pin_init::init_zeroed(), |raw, _inner, _ptr| {
+    .new_init(|ptr| Ok(init_zeroed(ptr)), |raw, _inner, _ptr| {
       let cfg = &self.cfg;
       let dyncfg = &self.dyncfg;
 
@@ -50,7 +79,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
             unk_3c: 8000,
             // ... 35 more fields ...
             max_pstate_scaled_2: max_ps_scaled,
-            ..Zeroable::init_zeroed()
+            ..Zeroable::zeroed()
           }
         },
         fast_die0_sensor_mask_2: U64(cfg.fast_sensor_mask[0]),
@@ -66,11 +95,12 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         unk_163c: 1,
         unk_3644: 0,
         // MODIFIED
-        hws1 <- Self::hw_shared1(&uninit raw.hws1, cfg)?,
+        hws1 <- Self::hw_shared1(&uninit raw.hws1, cfg),
         hws2 <- Self::hw_shared2(&uninit raw.hws2, cfg, dyncfg)?,
-        hws3 <- Self::hw_shared3(&uninit raw.hws3, cfg)?,
+        hws3 <- Self::hw_shared3(&uninit raw.hws3, cfg),
         unk_3ce8: 1,
-        ..Zeroable::init_zeroed()
+        // MODIFIED
+        ..Zeroable::zeroed()
       })
 
       // MODIFIED - Removed .chain(...) wrapper

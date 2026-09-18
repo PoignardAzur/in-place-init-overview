@@ -1,7 +1,21 @@
 # Asahi Monster Struct
 
 ```rust
-// PROPOSAL
+// PROTOTYPES
+
+fn new_init<'a, E: Error, T: GpuStruct>(
+  &mut self,
+  inner_init: impl FnOnce<Result<<T, E>>,
+  raw_init: impl FnOnce(&'a T, GpuWeakPointer<T>) -> Result<T::Raw<'a>, E>,
+) -> Result<GpuObject<T>>;
+
+fn t81xx_data(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> raw::T81xxData;
+fn hw_shared1(cfg: &hw::HwConfig) -> raw::HwDataShared1;
+fn hw_shared2(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> Result<raw::HwDataShared2, Error>;
+fn hw_shared3(cfg: &hw::HwConfig) -> raw::HwDataShared3;
+
+
+// IMPLEMENTATION
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   let pwr = &self.dyncfg.pwr;
@@ -11,7 +25,8 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
 
   self.alloc
     .private
-    .new_init(pin_init::init_zeroed(), |_inner, _ptr| {
+    // MODIFIED
+    .new_init(|| Ok(Zeroable::zeroed()), |_inner, _ptr| {
       let cfg = &self.cfg;
       let dyncfg = &self.dyncfg;
 
@@ -68,7 +83,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         hws2: Self::hw_shared2(cfg, dyncfg)?,
         hws3: Self::hw_shared3(cfg),
         unk_3ce8: 1,
-        ..Zeroable::init_zeroed()
+        ..Zeroable::zeroed()
       })
 
       // MODIFIED - Removed .chain(...) wrapper
@@ -100,7 +115,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
       // ... 3 for-loops ...
 
       // MODIFIED
-      raw
+      Ok(raw)
     })
 }
 ```
