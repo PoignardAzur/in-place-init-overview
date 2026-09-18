@@ -1,7 +1,21 @@
 # Asahi Monster Struct
 
 ```rust
-// PROPOSAL
+// PROTOTYPES
+
+fn new_init<'a, E: Error, T: GpuStruct, R: PinInit<T::Raw<'a>, E>>(
+  &mut self,
+  inner_init: impl Init<T, E>,
+  raw_init: impl FnOnce(&'a T, GpuWeakPointer<T>) -> R,
+) -> Result<GpuObject<T>>;
+
+fn t81xx_data(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::T81xxData>;
+fn hw_shared1(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared1>;
+fn hw_shared2(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::HwDataShared2, Error>;
+fn hw_shared3(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared3>;
+
+
+// IMPLEMENTATION
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   let pwr = &self.dyncfg.pwr;
@@ -50,7 +64,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
               unk_3c: 8000,
               // ... 35 more fields ...
               max_pstate_scaled_2: max_ps_scaled,
-              ..Zeroable::init_zeroed()
+              ..Zeroable::zeroed()
             }
           },
           fast_die0_sensor_mask_2: U64(cfg.fast_sensor_mask[0]),
@@ -70,7 +84,8 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
           hws2: Self::hw_shared2(cfg, dyncfg)?,
           hws3: Self::hw_shared3(cfg)?,
           unk_3ce8: 1,
-          ..Zeroable::init_zeroed()
+          // MODIFIED
+          ..Zeroable::zeroed()
         });
 
         // MODIFIED - Removed .chain(...) wrapper

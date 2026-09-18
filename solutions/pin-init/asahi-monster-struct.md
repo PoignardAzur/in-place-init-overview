@@ -3,7 +3,21 @@
 The function is the exact same as the one Asahi Linux writes.
 
 ```rust
-// PROPOSAL
+// PROTOTYPES
+
+fn new_init<'a, T: GpuStruct, R: PinInit<T::Raw<'a>>, E>(
+  &mut self,
+  inner_init: impl Init<T, E>,
+  raw_init: impl FnOnce(&'a T, GpuWeakPointer<T>) -> R,
+) -> Result<GpuObject<T>>;
+
+fn t81xx_data(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::T81xxData>;
+fn hw_shared1(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared1>;
+fn hw_shared2(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::HwDataShared2, Error>;
+fn hw_shared3(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared3>;
+
+
+// IMPLEMENTATION
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   let pwr = &self.dyncfg.pwr;

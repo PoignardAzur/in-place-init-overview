@@ -138,11 +138,30 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
 }
 ```
 
+Among other things, this snippet has a few `Self::foo()` method calls. The methods have roughly those prototypes:
+
+```rust
+fn t81xx_data(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::T81xxData>;
+fn hw_shared1(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared1>;
+fn hw_shared2(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig) -> impl Init<raw::HwDataShared2, Error>;
+fn hw_shared3(cfg: &hw::HwConfig) -> impl Init<raw::HwDataShared3>;
+```
+
+The snippet creates a `Result<GpuObject<...>>` using `Allocator::new_init()`, a trait method with roughly this prototype:
+
+```rust
+fn new_init<'a, E: Error, T: GpuStruct, R: PinInit<T::Raw<'a>, E>>(
+  &mut self,
+  inner_init: impl Init<T, E>,
+  raw_init: impl FnOnce(&'a T, GpuWeakPointer<T>) -> R,
+) -> Result<GpuObject<T>>;
+```
+
 ## Problem statement
 
 **Rewrite `hwdata_a` using your proposed syntax.**
 
-For the sake of brevity, you make skip fields in the same places the snippet above did:
+For the sake of brevity, you may skip fields in the same places the snippet above did:
 
 - After `let period_s`.
 - Between `pwr_integral_min_clamp` and `max_pstate_scaled_14`.
@@ -151,11 +170,25 @@ For the sake of brevity, you make skip fields in the same places the snippet abo
 
 Whenever your example changes syntax compared to the snippet above, insert a `// MODIFIED` above the changed line/paragraph.
 
+Include your own version of the method prototypes.
+
 
 ## Solution template
 
 ```rust
-// PROPOSAL
+// PROTOTYPES
+
+fn new_init<'a, T: GpuStruct, R: PinInit<T::Raw<'a>>, E>(
+  ...
+) -> ...;
+
+fn t81xx_data(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig, ...) -> ...;
+fn hw_shared1(cfg: &hw::HwConfig, ...) -> ...;
+fn hw_shared2(cfg: &hw::HwConfig, dyncfg: &hw::DynConfig, ...) -> ...;
+fn hw_shared3(cfg: &hw::HwConfig, ...) -> ...;
+
+
+// IMPLEMENTATION
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   // ...
