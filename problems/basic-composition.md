@@ -18,16 +18,21 @@ pub struct PinnedThing { ... };
 A list of composite types:
 
 ```rust
-pub struct Group1(PinnedThing, PinnedThing);
-
-pub type Group2 = [PinnedThing; 3];
-
-pub struct Group3 {
+pub struct NamedStruct {
     x: PinnedThing,
 }
 
-pub enum Group4 {
-    A(PinnedThing),
+pub struct TupleStruct(PinnedThing, PinnedThing);
+
+pub type Tuple = (PinnedThing, PinnedThing);
+
+pub type SmallArray = [PinnedThing; 3];
+
+pub type BigArray = [PinnedThing; 1024];
+
+pub enum Enum {
+    Named { x: PinnedThing },
+    Tuple(PinnedThing),
 }
 ```
 
@@ -37,7 +42,7 @@ And a constructor `new` with a signature of your choice that takes an integer an
 fn new(value: u32, ...) -> ...;
 ```
 
-**Write code that initializes an instance of each group type in-place, using values returned by `new`. Each successive call to new must take a different integer value.**
+**Write code that initializes an instance of each group type in-place, using values returned by `new`. Within each group, each successive call to new must take a different integer value.**
 
 
 ## Solution template
@@ -45,25 +50,30 @@ fn new(value: u32, ...) -> ...;
 ```rust
 // FIXED DECLARATIONS
 
-pub struct PinnedThing { ... };
-
-pub struct Group1(PinnedThing, PinnedThing);
-
-pub type Group2 = [PinnedThing; 3];
-
-pub struct Group3 {
+pub struct NamedStruct {
     x: PinnedThing,
 }
 
-pub enum Group4 {
-    A(PinnedThing),
+pub struct TupleStruct(PinnedThing, PinnedThing);
+
+pub type Tuple = (PinnedThing, PinnedThing);
+
+pub type SmallArray = [PinnedThing; 3];
+
+pub type BigArray = [PinnedThing; 1024];
+
+pub enum Enum {
+    Named { x: PinnedThing },
+    Tuple(PinnedThing),
 }
 
 // PROPOSAL
 
 fn new(value: u32, ...) -> ...;
 
-let group1: Group1 = ...; // Calling (new(1), new(2))
-let group2: Group2 = ...; // Calling (new(3), new(4), new(5))
+let named_struct: NamedStruct = ...; // Calling (new(1))
+let tuple_struct: TupleStruct = ...; // Calling (new(1), new(2))
+let tuple: Tuple = ...; // Calling (new(1), new(2))
+let small_array: SmallArray = ...; // Calling (new(1), new(2), new(3))
 // ...
 ```
