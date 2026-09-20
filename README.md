@@ -33,3 +33,8 @@ You should consult problems in this order:
 - **observe-address**
 - **boxed-rfl-mutex**
 - **asahi-monster-struct**
+
+## See also
+
+- https://github.com/rust-lang/beyond-refs/blob/main/src/in-place-init.md#potential-design-axioms
+- https://rust-lang.zulipchat.com/#narrow/channel/528918-t-lang.2Fin-place-init/topic/in-place.20initialization.3A.20RfL.20design.20wishes/with/539083811
