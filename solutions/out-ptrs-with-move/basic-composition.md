@@ -24,39 +24,37 @@ pub enum Enum {
 
 fn new(ptr: &uninit PinnedThing, value: u32) -> &own PinnedThing;
 
-let named_struct: NamedStruct;
-NamedStruct = NamedStruct {
+let named_struct: NamedStruct <- NamedStruct {
     x <- new(&uninit named_struct.0, 1),
 };
 
-let tuple_struct: TupleStruct;
-TupleStruct = TupleStruct {
+let tuple_struct: TupleStruct <- TupleStruct {
     0 <- new(&uninit tuple_struct.0, 1),
     1 <- new(&uninit tuple_struct.1, 2),
 };
 
-let tuple: Tuple;
-Tuple = (new(&uninit tuple.0, 1), new(&uninit tuple.1, 2));
+let tuple: Tuple <- (new(&uninit tuple.0, 1), new(&uninit tuple.1, 2));
 
 let small_array: SmallArray;
-let [SmallArray_0, SmallArray_1, SmallArray_2] = &uninit small_array;
-SmallArray <- [new(SmallArray_0, 1), new(SmallArray_1, 2), new(SmallArray_2, 3)];
+let [small_array_0, small_array_1, small_array_2] = &uninit small_array;
+small_array <- [new(small_array_0, 1), new(small_array_1, 2), new(small_array_2, 3)];
 
 // This function would likely be provided by the standard library
 fn init_from_fn<T, const N: usize>(array: &uninit [T; N], f: impl FnMut(usize) -> T)
     -> &own [T; N];
 let big_array: BigArray;
-big_array = init_from_fn(&uninit big_array, |i| new(i));
+big_array <- init_from_fn(&uninit big_array, |i| new(i));
 
+// None of the published proposals give a syntax for initializing enums, so this is speculative.
 let enum_named: Enum;
 let Enum::Named { x: enum_named } = &uninit enum_named;
-enum_named = Enum::Tuple {
+enum_named <- Enum::Tuple {
     a <- new(enum_named, 1),
 };
 
 let enum_tuple: Enum;
 let Enum::Tuple(enum_tuple) = &uninit enum_tuple;
-enum_tuple = Enum::Tuple {
+enum_tuple <- Enum::Tuple {
     a <- new(enum_tuple, 1),
 };
 ```

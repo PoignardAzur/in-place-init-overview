@@ -6,31 +6,31 @@
 fn new_init<'a, E: Error, T: GpuStruct>(
   &mut self,
   inner_init: impl FnOnce<&uninit T> -> Result<&own T, E>,
-  raw_init: impl FnOnce(ptr: &uninit T::Raw<'a>, &'a T, GpuWeakPointer<T>) -> Result<&own T::Raw<'a>, E>,
+  raw_init: impl FnOnce(ptr: &uninit T::Raw<'a>, &'a T, GpuWeakPointer<T>) -> Result<init<'_>, E>,
 ) -> Result<GpuObject<T>>;
 
 fn t81xx_data(
   ptr: &uninit raw::T81xxData,
   cfg: &hw::HwConfig,
   dyncfg: &hw::DynConfig,
-) -> &own raw::T81xxData;
+) -> init<'_>;
 fn hw_shared1(
   ptr: &uninit raw::HwDataShared1,
   cfg: &hw::HwConfig
-) -> &own raw::HwDataShared1;
+) -> init<'_>;
 fn hw_shared2(
   ptr: &uninit raw::HwDataShared2,
   cfg: &hw::HwConfig,
   dyncfg: &hw::DynConfig,
-) -> Result<&own raw::HwDataShared2, Error>;
+) -> Result<init<'_>, Error>;
 fn hw_shared3(
   ptr: &uninit raw::HwDataShared3,
   cfg: &hw::HwConfig
-) -> &own raw::HwDataShared3;
+) -> init<'_>;
 
 
 // IMPLEMENTATION
-fn init_zeroed<T: Zeroable>(ptr: &uninit T) -> &own T;
+fn init_zeroed<T: Zeroable>(ptr: &uninit T) -> init<'_>;
 
 fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
   let pwr = &self.dyncfg.pwr;
@@ -66,7 +66,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         // ... ~100 more fields ...
         max_pstate_scaled_14: max_ps_scaled,
         // MODIFIED
-        t81xx_data <- Self::t81xx_data(&uninit raw.t81xx_data, cfg, dyncfg)?,
+        t81xx_data <- Self::t81xx_data(_, cfg, dyncfg)?,
         #[ver(V >= V13_0B4)]
         unk_e10_0 <- {
           let filter_a = f32!(1.0) / pwr.se_filter_time_constant.into();
@@ -96,9 +96,9 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         unk_163c: 1,
         unk_3644: 0,
         // MODIFIED
-        hws1 <- Self::hw_shared1(&uninit raw.hws1, cfg),
-        hws2 <- Self::hw_shared2(&uninit raw.hws2, cfg, dyncfg)?,
-        hws3 <- Self::hw_shared3(&uninit raw.hws3, cfg),
+        hws1 <- Self::hw_shared1(_, cfg),
+        hws2 <- Self::hw_shared2(_, cfg, dyncfg)?,
+        hws3 <- Self::hw_shared3(_, cfg),
         unk_3ce8: 1,
         ..Zeroable::zeroed()
       })
@@ -124,10 +124,10 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
           raw.aux_leak_coef.cs_2[i] = *coef;
         }
 
-          for (i, coef) in csafr.leak_coef_cs.iter().enumerate() {
-            raw.aux_leak_coef.afr_1[i] = *coef;
-            raw.aux_leak_coef.afr_2[i] = *coef;
-          }
+        for (i, coef) in csafr.leak_coef_cs.iter().enumerate() {
+          raw.aux_leak_coef.afr_1[i] = *coef;
+          raw.aux_leak_coef.afr_2[i] = *coef;
+        }
       }
 
       // ... 3 for-loops ...
