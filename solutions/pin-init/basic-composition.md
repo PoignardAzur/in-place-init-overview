@@ -20,6 +20,7 @@ pub enum Enum {
     Tuple(PinnedThing),
 }
 
+
 // PROPOSAL
 
 fn new(value: u32) -> impl Init<PinnedThing, Infaillible>

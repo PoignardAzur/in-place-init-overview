@@ -9,7 +9,9 @@ pub struct CoupleOfThings {
     second: PinnedThing,
 };
 
+
 // PROPOSAL
+
 fn build(ptr: &uninit PinnedThing) -> Result<&own PinnedThing, Error>;
 
 impl CoupleOfThings {

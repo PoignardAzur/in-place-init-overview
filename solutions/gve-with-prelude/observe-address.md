@@ -7,6 +7,8 @@ pub struct SelfRef {
     a: u32,
     addr_of_a: *const u32,
 };
+
+
 // PROPOSAL
 
 fn make_self_ref(value: u32) -> SelfRef {
