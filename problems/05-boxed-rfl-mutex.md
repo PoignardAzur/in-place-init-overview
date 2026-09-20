@@ -93,6 +93,10 @@ impl DriverData {
     // ...
 }
 
+impl<T> Box<T> {
+    // ...
+}
+
 
 fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
     // ...
