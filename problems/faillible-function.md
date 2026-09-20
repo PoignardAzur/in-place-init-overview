@@ -42,7 +42,9 @@ pub struct CoupleOfThings {
     second: PinnedThing,
 };
 
+
 // PROPOSAL
+
 fn build(...) -> Result<..., Error>;
 
 impl CoupleOfThings {

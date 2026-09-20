@@ -20,6 +20,7 @@ pub enum Enum {
     Tuple(PinnedThing),
 }
 
+
 // PROPOSAL
 
 fn new(ptr: &uninit PinnedThing, value: u32) -> &own PinnedThing;

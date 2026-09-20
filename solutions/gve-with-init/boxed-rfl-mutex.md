@@ -22,6 +22,7 @@ pub struct Mutex<T> {
 
 pub struct DriverData { ... };
 
+
 // PROPOSAL
 
 impl<T> !Move for Opaque<T> {}

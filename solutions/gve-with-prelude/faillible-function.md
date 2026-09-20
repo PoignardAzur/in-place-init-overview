@@ -9,7 +9,9 @@ pub struct CoupleOfThings {
     second: PinnedThing,
 };
 
+
 // PROPOSAL
+
 fn build() -> Result<PinnedThing, Error>;
 
 impl CoupleOfThings {

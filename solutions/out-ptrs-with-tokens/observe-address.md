@@ -8,6 +8,7 @@ pub struct SelfRef {
     addr_of_a: *const u32,
 };
 
+
 // PROPOSAL
 
 fn make_self_ref(ptr: &uninit MyLargeStruct, value: u32) -> init<'_> {

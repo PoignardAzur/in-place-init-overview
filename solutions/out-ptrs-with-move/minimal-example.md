@@ -9,6 +9,7 @@ pub struct MyBasicStruct {
     c: u32,
 };
 
+
 // PROPOSAL
 
 fn create_struct(ptr: &uninit MyBasicStruct) -> &own MyBasicStruct {
