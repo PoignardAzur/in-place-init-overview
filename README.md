@@ -14,6 +14,16 @@ While I've tried to keep the problems and solutions pretty standardized and to s
 Feel free to make a PR if you think a given proposal would (as stated in its published version) solve a problem differently.
 
 
+## Problems
+
+- [minimal-example](problems/00-minimal-example.md)
+- [basic-composition](problems/01-basic-composition.md)
+- [faillible-function](problems/02-faillible-function.md)
+- [box-constructor](problems/03-box-constructor.md)
+- [observe-address](problems/04-observe-address.md)
+- [boxed-rfl-mutex](problems/05-boxed-rfl-mutex.md)
+- [asahi-monster-struct](problems/06-asahi-monster-struct.md)
+
 ## Proposals
 
 - [gve-with-init](solutions/gve-with-init)
@@ -21,18 +31,6 @@ Feel free to make a PR if you think a given proposal would (as stated in its pub
 - [out-ptrs-with-move](solutions/out-ptrs-with-move)
 - [out-ptrs-with-tokens](solutions/out-ptrs-with-tokens)
 - [pin-init](solutions/pin-init)
-
-## Problems
-
-You should consult problems in this order:
-
-- **minimal-example**
-- **basic-composition**
-- **faillible-function**
-- **box-constructor**
-- **observe-address**
-- **boxed-rfl-mutex**
-- **asahi-monster-struct**
 
 ## See also
 

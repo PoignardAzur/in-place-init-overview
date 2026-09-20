@@ -2,7 +2,7 @@
 
 ## Premise
 
-This example should demonstrate the minimum viable syntax for returning a large object from a function without moving it.
+This example should demonstrate the minimum viable syntax for returning an object from a function without moving it.
 
 
 ## Problem statement
