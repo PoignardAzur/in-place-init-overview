@@ -11,7 +11,17 @@ Consider this a best guess at what the proposal would look like.
 
 ## Example previews
 
-TODO
+```rust
+#[placing]
+fn make_self_ref(value: u32) -> SelfRef {
+    super let mut ret = SelfRef {
+        a: value,
+        addr_of_a: std::ptr::null();
+    };
+    ret.addr_of_a = &raw const ret.a;
+    ret
+}
+```
 
 ## More info
 

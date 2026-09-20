@@ -13,7 +13,7 @@ pub struct SelfRef {
 
 #[placing]
 fn make_self_ref(value: u32) -> SelfRef {
-    let mut ret = SelfRef {
+    super let mut ret = SelfRef {
         a: value,
         addr_of_a: std::ptr::null();
     };
