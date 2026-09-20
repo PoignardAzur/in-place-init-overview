@@ -37,7 +37,7 @@ Given an arbitrary type `DriverData` with some contents that must be pinned at i
 pub struct DriverData { ... };
 ```
 
-**Write fallible constructors for `Opaque`, `Mutex` and `DriverData`, then write a `create_pinned_driver` function with the following signature:**
+**Write constructors for `Opaque` and `Mutex` and constructor prototypes for `DriverData` and `Box`, then write a `create_pinned_driver` function with the following signature:**
 
 ```rust
 fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
@@ -45,9 +45,13 @@ fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
 }
 ```
 
+The constructors for at least `Mutex` and `DriverData` should be faillible.
+
 The constructors and functions should guarantee that `Opaque::value`, `Mutex::mutex`, `Mutex::value` and `DriverData`'s contents are never moved.
 
 (You may assume that the `Error` type is the same for all functions for simplicity.)
+
+The constructor for `Opaque<T>` should take a callback and run it with a `*mut T` to its payload. It should be unsafe and assume that the callback always fully initializes `T`.
 
 
 ## Solution template

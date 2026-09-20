@@ -28,15 +28,23 @@ pub struct DriverData { ... };
 impl<T> !Move for Opaque<T> {}
 
 impl<T> Opaque<T> {
-    pub fn from_fn(init_func: FnOnce(*mut T)) -> pin Self;
+    pub unsafe fn from_fn(init_func: FnOnce(*mut T)) -> Self {
+        let opaque = Self {
+            value: UnsafeCell::new(MaybeUninit::uninit()),
+            _pin: PhantomPinned,
+        };
+        init_fn(opaque.value.get() as *mut T);
+        opaque
+    }
 }
 
 impl<T> Mutex<T> {
-    pub fn new_with<E>(value: impl PinInit<T, E>) -> impl PinInit<Self, E> {
+    pub fn new_init<E>(value: impl PinInit<T, E>) -> impl PinInit<Self, E> {
         pin_init!{
-            let pin data = value?;
-            let pin mutex =
-                Opaque::from_fn(|ptr| unsafe { bindings::__mutex_init(ptr) });
+            let data = value?;
+            let mutex = unsafe {
+                Opaque::from_fn(|ptr| unsafe { bindings::__mutex_init(ptr) })
+            };
             Self { value, mutex }
         }
     }
@@ -46,8 +54,12 @@ impl DriverData {
     fn new() -> impl PinInit<DriverData, Error>;
 }
 
+impl Box<T> {
+    pub fn pin_init<E>(value: impl PinInit<T, E>) -> Result<Pin<Box<T>>, E>;
+}
+
 
 fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
-    Box::pin_with(Mutex::new_with(DriverData::new()))
+    Box::pin_init(Mutex::new_init(DriverData::new()))
 }
 ```
