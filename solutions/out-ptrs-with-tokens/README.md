@@ -1,4 +1,4 @@
-# Out pointers
+# Out pointers with initialization tokens
 
 ## Summary
 

@@ -1,4 +1,4 @@
-# Minimal out pointers
+# Out pointers with move pointers
 
 ## Summary
 

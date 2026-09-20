@@ -1,4 +1,4 @@
-# Guaranteed Value Emplacement With Function Preludes
+# Guaranteed Value Emplacement with function preludes
 
 ## Summary
 
