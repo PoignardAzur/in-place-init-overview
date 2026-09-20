@@ -1,7 +1,26 @@
 # in-place-init-overview
-Overview of proposals for adding in-place-init to Rust
 
-<!-- TODO - Flesh out this README -->
+This repository is an overview of proposals for adding [in-place initialization](https://github.com/rust-lang/goals/issues/395) to the Rust programming language.
+
+This repository has two parts:
+
+- A list of problems representing things that an in-place-init feature will be expected to do.
+- For each major in-place-init proposal, a list of code examples showing how that proposal would address each given problem.
+
+(This is based on similar previous efforts like @BennoLossin's [in-place-init-proposals](https://github.com/BennoLossin/in-place-init-proposals))
+
+While I've tried to keep the problems and solutions pretty standardized and to stick to each proposal's published syntax as much as possible, some of the solutions may be a little speculative and pseudo-code-ish.
+
+Feel free to make a PR if you think a given proposal would (as stated in its published version) solve a problem differently.
+
+
+## Proposals
+
+- [gve-with-init](solutions/gve-with-init)
+- [gve-with-prelude](solutions/gve-with-prelude)
+- [out-ptrs-with-move](solutions/out-ptrs-with-move)
+- [out-ptrs-with-tokens](solutions/out-ptrs-with-tokens)
+- [pin-init](solutions/pin-init)
 
 ## Problems
 
