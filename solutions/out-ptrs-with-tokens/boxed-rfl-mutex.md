@@ -25,27 +25,28 @@ pub struct DriverData { ... };
 // PROPOSAL
 
 impl<T> Opaque<T> {
-    pub fn ffi_init(
+    pub unsafe fn ffi_init(
         &uninit self,
         init_fn: FnOnce(*mut T),
-    ) -> &own Self {
-        init_fn(self as *mut self);
-        assume_init(self)
+    ) -> init<'_> {
+        self <- Self {
+            value: UnsafeCell::new(MaybeUninit::uninit()),
+            _pin: PhantomPinned,
+        };
+        init_fn(self.value.get() as *mut T);
+        self
     }
 }
 
 impl<T> Mutex<T> {
     pub fn new<E>(
         &uninit self,
-        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own T, E>,
+        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<init<'a>, E>,
     ) -> Result<&own Self, E> {
-        self.mutex <- Opaque::ffi_init(
-            &uninit self.mutex,
-            |ptr| unsafe {
-                bindings::__mutex_init(ptr);
-            }
-        );
-        self.value <- init_fn(&uninit self.value)?;
+        self.mutex <- unsafe {
+            Opaque::ffi_init(_, |ptr| unsafe { bindings::__mutex_init(ptr); })
+        };
+        self.value <- init_fn(_)?;
         self <- _;
         Ok(self)
     }
@@ -54,7 +55,7 @@ impl<T> Mutex<T> {
 impl DriverData {
     pub fn new(
         &uninit self,
-    ) -> Result<&own Self, Error>;
+    ) -> Result<init<'_>, Error>;
 }
 
 

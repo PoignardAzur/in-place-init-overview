@@ -10,12 +10,12 @@ pub struct CoupleOfThings {
 };
 
 // PROPOSAL
-fn build(ptr: &uninit PinnedThing) -> Result<&out PinnedThing, Error>;
+fn build(ptr: &uninit PinnedThing) -> Result<init<'_>, Error>;
 
 impl CoupleOfThings {
-    fn build(ptr: &uninit CoupleOfThings) -> Result<&out CoupleOfThings, Error> {
-        ptr.first <- build(&ptr.first)?;
-        ptr.second <- build(&ptr.second)?;
+    fn build(ptr: &uninit CoupleOfThings) -> Result<init<'_>, Error> {
+        ptr.first <- build(_)?;
+        ptr.second <- build(_)?;
         ptr <- _;
         Ok(ptr)
     }

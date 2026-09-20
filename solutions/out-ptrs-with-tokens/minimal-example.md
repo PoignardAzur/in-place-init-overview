@@ -11,15 +11,14 @@ pub struct MyBasicStruct {
 
 // PROPOSAL
 
-fn create_struct(ptr: &uninit MyBasicStruct) -> &own MyBasicStruct {
-    ptr <- MyLargeStruct {
-        a: 0,
-        b: 0,
-        c: 0,
-    };
+fn create_struct(ptr: &uninit MyBasicStruct) -> init<'_> {
+    ptr.a = 0;
+    ptr.b = 0;
+    ptr.c = 0;
+
+    ptr <- _;
     ptr
 }
 
-let my_value: MyBasicStruct;
-my_value <- create_struct(&uninit my_value);
+let my_value: MyBasicStruct <- create_struct(_);
 ```
