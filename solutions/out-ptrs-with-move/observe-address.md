@@ -15,10 +15,10 @@ fn make_self_ref(ptr: &uninit MyLargeStruct, value: u32) -> &own MyLargeStruct {
     ptr <- MyLargeStruct {
         a: value,
         addr_of_a: addr_of_a,
-    }
+    };
+    ptr
 }
 
-let value: MyLargeStruct;
-value <- make_self_ref(&uninit value);
+let value: MyLargeStruct <- make_self_ref(&uninit value);
 assert_eq!(value.addr_of_a, &raw const value.a);
 ```

@@ -46,7 +46,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
       let dyncfg = &self.dyncfg;
 
       // MODIFIED
-      let raw = raw <- raw::HwDataA::ver {
+      raw <- raw::HwDataA::ver {
         clocks_per_period: clocks_per_period,
         #[ver(V >= V13_0B4)]
         clocks_per_period_2: clocks_per_period,
@@ -66,7 +66,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         // ... ~100 more fields ...
         max_pstate_scaled_14: max_ps_scaled,
         // MODIFIED
-        t81xx_data <- Self::t81xx_data(&uninit raw.t81xx_data, cfg, dyncfg)?,
+        t81xx_data <- Self::t81xx_data(&uninit raw.t81xx_data, cfg, dyncfg),
         #[ver(V >= V13_0B4)]
         unk_e10_0 <- {
           let filter_a = f32!(1.0) / pwr.se_filter_time_constant.into();
@@ -101,7 +101,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         unk_3ce8: 1,
         // MODIFIED
         ..Zeroable::zeroed()
-      })
+      });
 
       // MODIFIED - Removed .chain(...) wrapper
 

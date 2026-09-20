@@ -3,18 +3,22 @@
 ```rust
 // FIXED DECLARATIONS
 
-pub struct MyLargeStruct { ... };
-
+pub struct MyBasicStruct {
+    a: u32,
+    b: u32,
+    c: u32,
+};
 
 // PROPOSAL
 
-fn create_large_struct(a: &uninit MyLargeStruct) -> &own MyLargeStruct {
-    a <- MyLargeStruct {
-        // ...
-    }
+fn create_struct(ptr: &uninit MyBasicStruct) -> &own MyBasicStruct {
+    ptr <- MyLargeStruct {
+        a: 0,
+        b: 0,
+        c: 0,
+    };
+    ptr
 }
 
-// pub fn Box::new_init(
-//   ctor: impl for<'a> FnOnce(&'a uninit T) -> &'a own T,
-// ) -> Self;
-let my_box = Box::new_init(create_large_struct);
+let my_value: MyBasicStruct <- create_struct(&uninit my_value);
+```

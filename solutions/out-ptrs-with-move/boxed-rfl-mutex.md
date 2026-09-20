@@ -30,12 +30,14 @@ impl<T> Opaque<T> {
         init_fn: FnOnce(*mut T),
     ) -> &own Self {
         init_fn(self as *mut self);
-        assume_init(self)
+        unsafe {
+            assume_init(self)
+        }
     }
 }
 
 impl<T> Mutex<T> {
-    pub fn new<E>(
+    pub fn new_with<E>(
         &uninit self,
         init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own T, E>,
     ) -> Result<&own Self, E> {
@@ -46,10 +48,12 @@ impl<T> Mutex<T> {
             }
         );
         let value = init_fn(&uninit self.value)?;
-        Ok(self <- Self {
+
+        self <- Self {
             mutex <- mutex,
             value <- value,
-        })
+        };
+        Ok(self)
     }
 }
 
