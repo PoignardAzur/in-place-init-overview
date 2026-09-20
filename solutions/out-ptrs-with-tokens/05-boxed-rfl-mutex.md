@@ -43,7 +43,7 @@ impl<T> Mutex<T> {
     pub fn new<E>(
         &uninit self,
         init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<init<'a>, E>,
-    ) -> Result<&own Self, E> {
+    ) -> Result<init<'_>, E> {
         self.mutex <- unsafe {
             Opaque::ffi_init(_, |ptr| unsafe { bindings::__mutex_init(ptr); })
         };
@@ -59,9 +59,16 @@ impl DriverData {
     ) -> Result<init<'_>, Error>;
 }
 
+impl Box<T> {
+    pub fn try_pin_with<E>(
+        &uninit self,
+        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<init<'a>, E>,
+    ) -> Result<Pin<Box<T>>, E>;
+}
+
 
 fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
-    Box::pin_with(
+    Box::try_pin_with(
         |ptr| Mutex::new_with(ptr, |ptr| DriverData::new(ptr))
     )
 }
