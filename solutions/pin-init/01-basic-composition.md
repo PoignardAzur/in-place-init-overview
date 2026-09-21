@@ -3,11 +3,14 @@
 ```rust
 // FIXED DECLARATIONS
 
+#[pin_data]
 pub struct NamedStruct {
+    #[pin]
     x: PinnedThing,
 }
 
-pub struct TupleStruct(PinnedThing, PinnedThing);
+#[pin_data]
+pub struct TupleStruct(#[pin] PinnedThing, #[pin] PinnedThing);
 
 pub type Tuple = (PinnedThing, PinnedThing);
 
@@ -23,23 +26,22 @@ pub enum Enum {
 
 // PROPOSAL
 
-fn new(value: u32) -> impl Init<PinnedThing, Infallible>
+fn new(value: u32) -> impl PinInit<PinnedThing, Infallible>;
 
-let named_struct: impl Init<NamedStruct> = init NamedStruct { x: new(1) };
-let tuple_struct: impl Init<TupleStruct> = init TupleStruct(new(1), new(2));
-let tuple: impl Init<Tuple> = init (new(1), new(2));
-let small_array: impl Init<SmallArray> = init [new(1), new(2), new(3)];
-let big_array: impl Init<BigArray> = todo!("See below");
-let enum_named: impl Init<Enum> = init Enum::Named { x: new(1) };
-let enum_tuple: impl Init<Enum> = init Enum::Tuple(new(1)),
+let named_struct: impl PinInit<NamedStruct> = pin_init!(NamedStruct { x <- new(1) });
+// TODO(benno): verify this syntax
+let tuple_struct: impl PinInit<TupleStruct> = pin_init!(TupleStruct(<- new(1), <- new(2)));
 
+let small_array: impl PinInit<SmallArray> = init init_array_fn(|i| new(i + 1));
 // Array repetition with same value:
-let big_array: impl Init<BigArray> = init [new(1), 1024];
-
+let big_array: impl PinInit<BigArray> = init_array_fn(|i| new(1));
 // Array repetition with changing value:
-let big_array: impl Init<BigArray> = init_from_fn(|i| new(i)).into_ok();
+let big_array: impl PinInit<BigArray> = init_from_fn(|i| new(i)).into_ok();
 
-// init_from_fn would likely be provided by the standard library with this signature:
-fn init_from_fn<T, E, const N: usize>(f: impl FnMut(usize) -> impl Init<T, E>)
-    -> impl Init<[T; N], E>;
+fn init_from_fn<T, E, const N: usize>(f: impl FnMut(usize) -> impl PinInit<T, E>)
+    -> impl PinInit<[T; N], E>;
+
+let enum_named: impl PinInit<Enum> = /* UNSUPPORTED */;
+let enum_tuple: impl PinInit<Enum> = /* UNSUPPORTED */;
+let tuple: impl PinInit<Tuple> = /* UNSUPPORTED */;
 ```

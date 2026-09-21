@@ -13,12 +13,12 @@ pub struct MyBasicStruct {
 // PROPOSAL
 
 fn create_struct() -> impl Init<MyLargeStruct, Infallible> {
-    init MyBasicStruct {
+    pin_init!(MyBasicStruct {
         a: 0,
         b: 0,
         c: 0,
-    }
+    })
 }
 
-let my_value: MyBasicStruct = init!(create_struct());
+stack_pin_init!(let my_value: MyBasicStruct = create_struct());
 ```

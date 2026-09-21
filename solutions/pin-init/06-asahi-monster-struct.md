@@ -81,34 +81,34 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
             ..Zeroable::init_zeroed()
         })
         .chain(|raw| {
-        for i in 0..self.dyncfg.pwr.perf_states.len() {
-            raw.sram_k[i] = self.cfg.sram_k;
-        }
-
-        for (i, coef) in pwr.core_leak_coef.iter().enumerate() {
-            raw.core_leak_coef[i] = *coef;
-        }
-
-        for (i, coef) in pwr.sram_leak_coef.iter().enumerate() {
-            raw.sram_leak_coef[i] = *coef;
-        }
-
-        #[ver(V >= V13_0B4)]
-        if let Some(csafr) = pwr.csafr.as_ref() {
-            for (i, coef) in csafr.leak_coef_afr.iter().enumerate() {
-                raw.aux_leak_coef.cs_1[i] = *coef;
-                raw.aux_leak_coef.cs_2[i] = *coef;
+            for i in 0..self.dyncfg.pwr.perf_states.len() {
+                raw.sram_k[i] = self.cfg.sram_k;
             }
 
-            for (i, coef) in csafr.leak_coef_cs.iter().enumerate() {
-                raw.aux_leak_coef.afr_1[i] = *coef;
-                raw.aux_leak_coef.afr_2[i] = *coef;
+            for (i, coef) in pwr.core_leak_coef.iter().enumerate() {
+                raw.core_leak_coef[i] = *coef;
             }
-        }
 
-        // ... 3 for-loops ...
+            for (i, coef) in pwr.sram_leak_coef.iter().enumerate() {
+                raw.sram_leak_coef[i] = *coef;
+            }
 
-        Ok(())
+            #[ver(V >= V13_0B4)]
+            if let Some(csafr) = pwr.csafr.as_ref() {
+                for (i, coef) in csafr.leak_coef_afr.iter().enumerate() {
+                    raw.aux_leak_coef.cs_1[i] = *coef;
+                    raw.aux_leak_coef.cs_2[i] = *coef;
+                }
+
+                for (i, coef) in csafr.leak_coef_cs.iter().enumerate() {
+                    raw.aux_leak_coef.afr_1[i] = *coef;
+                    raw.aux_leak_coef.afr_2[i] = *coef;
+                }
+            }
+
+            // ... 3 for-loops ...
+
+            Ok(())
         })
     })
 }

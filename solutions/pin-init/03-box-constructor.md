@@ -9,10 +9,10 @@ pub struct PinnedThing { ... }
 
 // PROPOSAL
 
-fn make_thing() -> impl Init<PinnedThing, Infallible>;
+fn make_thing() -> impl PinInit<PinnedThing, Infallible>;
 
 impl<T> Box<T> {
-    pub fn init(i: impl Init<T, Infallible>) -> Box<T> {
+    pub fn init(i: impl PinInit<T, Infallible>) -> Box<T> {
         let allocation = Box::<T>::new_uninit();
 
         unsafe {
