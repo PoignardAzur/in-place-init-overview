@@ -23,7 +23,7 @@ pub enum Enum {
 
 // PROPOSAL
 
-fn new(value: u32) -> impl Init<PinnedThing, Infaillible>
+fn new(value: u32) -> impl Init<PinnedThing, Infallible>
 
 let named_struct: impl Init<NamedStruct> = init NamedStruct { x: new(1) };
 let tuple_struct: impl Init<TupleStruct> = init TupleStruct(new(1), new(2));

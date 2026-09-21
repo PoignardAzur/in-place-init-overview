@@ -12,7 +12,7 @@ As far as I'm aware, Alice no longer supports this proposal, but I've included i
 
 ```rust
 // MINIMAL EXAMPLE
-fn create_struct() -> impl Init<MyLargeStruct, Infaillible> {
+fn create_struct() -> impl Init<MyLargeStruct, Infallible> {
     init MyBasicStruct {
         a: 0,
         b: 0,

@@ -119,7 +119,6 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
 
         // MODIFIED
         raw
-      })
     })
 }
 ```

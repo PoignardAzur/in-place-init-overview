@@ -84,7 +84,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         hws3: Self::hw_shared3(cfg),
         unk_3ce8: 1,
         ..Zeroable::zeroed()
-      })
+      };
 
       // MODIFIED - Removed .chain(...) wrapper
       for i in 0..self.dyncfg.pwr.perf_states.len() {

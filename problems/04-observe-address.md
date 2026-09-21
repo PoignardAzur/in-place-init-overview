@@ -15,7 +15,7 @@ Given the following struct `SelfRef`:
 pub struct SelfRef {
     a: u32,
     addr_of_a: *const u32,
-};
+}
 ```
 
 **Write a constructor `make_self_ref` that returns an instance of `SelfRef` such that `value.addr_of_a == &raw const value.a`.**
@@ -29,7 +29,7 @@ pub struct SelfRef {
 pub struct SelfRef {
     a: u32,
     addr_of_a: *const u32,
-};
+}
 
 
 // PROPOSAL

@@ -101,7 +101,7 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
         unk_3ce8: 1,
         // MODIFIED
         ..Zeroable::zeroed()
-      });
+      };
 
       // MODIFIED - Removed .chain(...) wrapper
 
@@ -135,6 +135,5 @@ fn hwdata_a(&mut self) -> Result<GpuObject<HwDataA::ver>> {
       // MODIFIED
       Ok(raw)
     })
-})
 }
 ```

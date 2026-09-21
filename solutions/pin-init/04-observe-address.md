@@ -6,12 +6,12 @@
 pub struct SelfRef {
     a: u32,
     addr_of_a: *const u32,
-};
+}
 
 
 // PROPOSAL
 
-fn make_self_ref(value: u32) -> impl PinInit<SelfRef, Infaillible> {
+fn make_self_ref(value: u32) -> impl PinInit<SelfRef, Infallible> {
     pin_init!(SelfRef {
         a: value,
         addr_of_a: &raw const a,
