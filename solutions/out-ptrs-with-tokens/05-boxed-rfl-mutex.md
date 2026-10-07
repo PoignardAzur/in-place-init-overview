@@ -20,7 +20,7 @@ pub struct Mutex<T> {
     value: UnsafeCell<T>,
 }
 
-pub struct DriverData { ... };
+pub struct DriverData { ... }
 
 
 // PROPOSAL

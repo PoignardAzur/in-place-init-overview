@@ -4,7 +4,7 @@
 ```rust
 // FIXED DECLARATIONS
 
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 
 
 // PROPOSAL
@@ -21,7 +21,7 @@ impl<T> Box<T> {
         // We disarm the init<'_> and immediately return Box<T>
         unsafe {
             init.discharge();
-            allocation.assume_init() 
+            allocation.assume_init()
         }
     }
 }

@@ -10,7 +10,7 @@ This example should demonstrate how a value can be initialized in a box in-place
 Given an arbitrary type `PinnedThing`:
 
 ```rust
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 ```
 
 And a constructor `make_thing()` with a signature of your choice that returns a `PinnedThing` in-place:
@@ -31,7 +31,7 @@ By "emplace", we mean that no instance of `PinnedThing` should move.
 ```rust
 // FIXED DECLARATIONS
 
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 
 
 // PROPOSAL

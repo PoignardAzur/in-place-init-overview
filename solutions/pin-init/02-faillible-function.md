@@ -1,25 +1,27 @@
-# Faillible function
+# Fallible function
 
 ```rust
 // FIXED DECLARATIONS
-pub struct PinnedThing { ... };
+#[pin_data]
+pub struct PinnedThing { ... }
 
+#[pin_data]
 pub struct CoupleOfThings {
     first: PinnedThing,
     second: PinnedThing,
-};
+}
 
 
 // PROPOSAL
 
-fn build() -> impl Init<PinnedThing, Error>;
+fn build() -> impl PinInit<PinnedThing, Error>;
 
 impl CoupleOfThings {
     fn build() -> impl Init<Self, Error> {
-        init Self {
-            first: build(),
-            second: build(),
-        }
+        pin_init!(Self {
+            first <- build(),
+            second <- build(),
+        })
     }
 }
 ```

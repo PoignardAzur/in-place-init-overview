@@ -1,4 +1,4 @@
-# Faillible function
+# Fallible function
 
 ## Premise
 
@@ -14,12 +14,12 @@ This is necessary for any use-cases where in-place initialization might be used 
 Given an arbitrary type `PinnedThing` and a struct `PairOfThings`:
 
 ```rust
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 
 pub struct CoupleOfThings {
     first: PinnedThing,
     second: PinnedThing,
-};
+}
 ```
 
 And a constructor `build()` with a signature of your choice that returns a `PinnedThing` in-place or an `Error`:
@@ -40,7 +40,7 @@ pub struct PinnedThing { ... };
 pub struct CoupleOfThings {
     first: PinnedThing,
     second: PinnedThing,
-};
+}
 
 
 // PROPOSAL
