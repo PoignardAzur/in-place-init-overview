@@ -12,7 +12,7 @@ pub struct PinnedThing { ... };
 fn make_thing(ptr: &uninit PinnedThing) -> &own PinnedThing;
 
 impl<T> Box<T> {
-    fn new_with(callback: impl for<'a> FnOnce(&'a uninit T) -> &'a own T) -> Self {
+    fn new_with(callback: impl for<'a> FnOnce(&'a uninit T) -> &'a own<'a> T) -> Self {
         let allocation = Box::<T>::new_uninit();
         let ptr: &uninit T = &uninit *allocation;
 

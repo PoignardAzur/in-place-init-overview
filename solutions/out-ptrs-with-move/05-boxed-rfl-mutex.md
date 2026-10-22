@@ -41,7 +41,7 @@ impl<T> Opaque<T> {
 impl<T> Mutex<T> {
     pub fn new_with<E>(
         &uninit self,
-        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own T, E>,
+        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own<'a> T, E>,
     ) -> Result<&own Self, E> {
         let mutex = unsafe {
             Opaque::ffi_init(
@@ -70,7 +70,7 @@ impl DriverData {
 impl Box<T> {
     pub fn try_pin_with<E>(
         &uninit self,
-        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own T, E>,
+        init_fn: impl for<'a> FnOnce(&'a uninit T) -> Result<&'a own<'a> T, E>,
     ) -> Result<Pin<Box<T>>, E>;
 }
 
