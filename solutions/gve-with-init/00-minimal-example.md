@@ -12,6 +12,8 @@ pub struct MyBasicStruct {
 
 // PROPOSAL
 
+impl !Move for MyBasicStruct {}
+
 fn create_struct() -> MyBasicStruct {
     MyBasicStruct {
         a: 0,

@@ -12,6 +12,10 @@ pub struct CoupleOfThings {
 
 // PROPOSAL
 
+use gve_init::{Init, try_init};
+
+impl !Move for PinnedThing {}
+
 fn build() -> impl Init<PinnedThing, Error>;
 
 impl CoupleOfThings {
