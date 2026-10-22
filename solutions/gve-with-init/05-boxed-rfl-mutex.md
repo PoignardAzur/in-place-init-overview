@@ -51,15 +51,17 @@ impl<T> Mutex<T> {
 }
 
 impl DriverData {
-    fn new() -> impl PinInit<DriverData, Error>;
+    fn new() -> impl Init<DriverData, Error>;
 }
 
 impl Box<T> {
-    pub fn pin_init<E>(value: impl PinInit<T, E>) -> Result<Pin<Box<T>>, E>;
+    pub fn new_init<E>(value: impl Init<T, E>) -> Result<Box<T>, E>;
 }
 
 
-fn create_pinned_driver() -> Result<Pin<Box<Mutex<DriverData>>>, Error> {
-    Box::pin_init(Mutex::new_init(DriverData::new()))
+fn create_pinned_driver() -> Result<Box<Mutex<DriverData>>, Error> {
+    let mutex = Mutex::new_init(DriverData::new());
+    let boxed_mutex = Box::new_init(new)?;
+    Ok(Box::into_pin(boxed_mutex))
 }
 ```

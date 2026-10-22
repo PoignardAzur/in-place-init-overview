@@ -2,10 +2,7 @@
 
 ## Summary
 
-TODO
-
-This is based on the initial "Guaranteed Value Emplacement" RFC draft, though the examples in this folder use a slightly different syntax that hasn't been documented yet.
-
+This is based on the [Minimal Guaranteed Value Emplacement (min-GVE)](https://hackmd.io/@s_haMSbyTAOWfoXc1aYNUg/rylb1KLoMx) proposal.
 
 ## Example previews
 

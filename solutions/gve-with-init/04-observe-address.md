@@ -11,6 +11,8 @@ pub struct SelfRef {
 
 // PROPOSAL
 
+impl !Move for PinnedThing {}
+
 fn make_self_ref(value: u32) -> SelfRef {
     let mut ret = SelfRef {
         a: value,
