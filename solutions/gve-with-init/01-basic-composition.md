@@ -23,6 +23,8 @@ pub enum Enum {
 
 // PROPOSAL
 
+impl !Move for PinnedThing {}
+
 fn new(value: u32) -> PinnedThing;
 
 let named_struct: NamedStruct = NamedStruct { x: new(1) };
