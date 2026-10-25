@@ -4,7 +4,7 @@
 ```rust
 // FIXED DECLARATIONS
 
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 
 
 // PROPOSAL

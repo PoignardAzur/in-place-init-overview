@@ -15,12 +15,16 @@ pub struct Opaque<T> {
     _pin: PhantomPinned,
 }
 
+#[pin_data]
 pub struct Mutex<T> {
+    #[pin]
     mutex: Opaque<bindings::mutex>,
+    #[pin]
     value: UnsafeCell<T>,
 }
 
-pub struct DriverData { ... };
+#[pin_data]
+pub struct DriverData { ... }
 
 
 // PROPOSAL
@@ -41,10 +45,10 @@ impl<T> Mutex<T> {
     pub fn new<E>(
         value: impl PinInit<T, E>,
     ) -> impl PinInit<Self, E> {
-        init Self {
+        pin_init!(Self {
             mutex <- Opaque::ffi_init(|ptr| unsafe { bindings::__mutex_init(ptr) }),
             value <- UnsafeCell::pin_init(value),
-        }
+        })
     }
 }
 

@@ -1,13 +1,13 @@
-# Faillible function
+# Fallible function
 
 ```rust
 // FIXED DECLARATIONS
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 
 pub struct CoupleOfThings {
     first: PinnedThing,
     second: PinnedThing,
-};
+}
 
 
 // PROPOSAL

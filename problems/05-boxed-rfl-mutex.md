@@ -34,7 +34,7 @@ mod bindings {
 Given an arbitrary type `DriverData` with some contents that must be pinned at initialization and remain pinned indefinitely:
 
 ```rust
-pub struct DriverData { ... };
+pub struct DriverData { ... }
 ```
 
 **Write constructors for `Opaque` and `Mutex` and constructor prototypes for `DriverData` and `Box`, then write a `create_pinned_driver` function with the following signature:**
@@ -76,7 +76,7 @@ pub struct Mutex<T> {
     value: UnsafeCell<T>,
 }
 
-pub struct DriverData { ... };
+pub struct DriverData { ... }
 
 
 // PROPOSAL

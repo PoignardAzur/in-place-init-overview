@@ -12,7 +12,7 @@ By "composed", we mean "you can initialize large types in-place by initializing 
 Given an arbitrary type `PinnedThing`:
 
 ```rust
-pub struct PinnedThing { ... };
+pub struct PinnedThing { ... }
 ```
 
 A list of composite types:

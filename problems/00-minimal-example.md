@@ -14,7 +14,7 @@ pub struct MyBasicStruct {
     a: u32,
     b: u32,
     c: u32,
-};
+}
 ```
 
 **Write a function returning `MyBasicStruct` (setting fields to zero), and then call this function in a way that emplaces its result in a local.**
@@ -32,7 +32,7 @@ pub struct MyBasicStruct {
     a: u32,
     b: u32,
     c: u32,
-};
+}
 
 
 // PROPOSAL
